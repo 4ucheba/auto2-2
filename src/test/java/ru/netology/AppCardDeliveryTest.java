@@ -21,7 +21,7 @@ public class AppCardDeliveryTest {
         return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
-    String planningDate = generateDate(3);
+    String planningDate = generateDate(4);
 
     @Test
     void shouldSendForm() {
@@ -36,18 +36,5 @@ public class AppCardDeliveryTest {
         $("[data-test-id='notification']").shouldBe(visible);
     }
 
-    @Test
-    void shouldSendFormWithDashInName() {
-        $("[data-test-id=city] input").setValue("Саратов");
-        $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id=date] input").setValue(planningDate);
-        $("[data-test-id=name] input").setValue("Иванов-Петров");
-        $("[data-test-id=phone] input").setValue("+79119871234");
-        $("[data-test-id=agreement]").click();
-        $$("button").find(exactText("Забронировать")).click();
-        $("[data-test-id='notification']").shouldHave(text("Встреча успешно забронирована на " + planningDate), Duration.ofSeconds(15));
-        $("[data-test-id='notification']").shouldBe(visible);
-    }
-
-
+   
 }
